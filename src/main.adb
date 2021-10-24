@@ -23,7 +23,7 @@ begin
 
       loop
          AS_Put_Line ("Enter: YES(1) / NO(0)");
-         -- ask for an  integer (in variable value) until an integer has been entered
+   -- ask for an  integer (in variable value) until an integer has been entered
          --   if something else has been entered ask again
          AS_Get (value, "Please type in an integer; please try again");
 

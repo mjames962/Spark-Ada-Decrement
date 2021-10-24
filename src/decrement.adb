@@ -3,11 +3,13 @@ pragma SPARK_Mode (On);
 with AS_Io_Wrapper; use AS_Io_Wrapper;
 
 package body Decrement is
-   o1 : Integer;
-   o2 : Integer;
-   o3 : Integer;
+   o1 : Digit;
+   o2 : Digit;
+   o3 : Digit;
 
-   function dec (i1, i2, i3 : in Integer) return Integer is
+   X : Num;
+
+   function dec (i1, i2, i3 : in Digit) return Integer is
    begin
 
       o1 := i1;
@@ -30,7 +32,7 @@ package body Decrement is
          end if;
       end if;
 
-      return (o1 * 100) + (o2 * 10) + o3;
+      return Integer ((o1 * 100) + (o2 * 10) + o3);
    end dec;
 
    procedure run is
@@ -95,7 +97,11 @@ package body Decrement is
          exit when valid;
       end loop;
 
-      output := Decrement.dec (i1 => i1, i2 => i2, i3 => i3);
+      X.d1 := Digit (i1);
+      X.d2 := Digit (i2);
+      X.d3 := Digit (i3);
+
+      output := Decrement.dec (i1 => X.d1, i2 => X.d2, i3 => X.d3);
 
       AS_Put_Line (output);
 
