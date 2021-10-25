@@ -13,13 +13,7 @@ begin
    loop
       Decrement.run;
 
-      -- First we initialise standard_input and standard output
-      AS_Init_Standard_Output;
-      AS_Init_Standard_Input;
       AS_Put_Line ("Would you like to enter another 3 digit number?");
-
-      value := 0;
-      valid := False;
 
       loop
          AS_Put_Line ("Enter: YES(1) / NO(0)");

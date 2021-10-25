@@ -5,68 +5,50 @@ with AS_Io_Wrapper; use AS_Io_Wrapper;
 package body Decrement is
 
    function dec (input : Num) return Num is
-      o1     : Digit;
-      o2     : Digit;
-      o3     : Digit;
       output : Num;
 
    begin
-      o1 := input.d1;
-      o2 := input.d2;
-      o3 := input.d3;
+      output.d1 := input.d1;
+      output.d2 := input.d2;
 
       if input.d3 > 0 then
-         o3 := input.d3 - 1;
+         output.d3 := input.d3 - 1;
       else
-         o3 := 9;
+         output.d3 := 9;
          if input.d2 > 0 then
-            o2 := input.d2 - 1;
+            output.d2 := input.d2 - 1;
          else
-            o2 := 9;
+            output.d2 := 9;
             if input.d1 > 0 then
-               o1 := input.d1 - 1;
+               output.d1 := input.d1 - 1;
             else
-               o1 := 9;
+               output.d1 := 9;
             end if;
          end if;
       end if;
-
-      output.d3 := o3;
-      output.d2 := o2;
-      output.d1 := o1;
 
       return output;
    end dec;
 
    procedure decProc (input : in out Num) is
-      o1 : Digit;
-      o2 : Digit;
-      o3 : Digit;
 
    begin
-      o1 := input.d1;
-      o2 := input.d2;
-      o3 := input.d3;
 
       if input.d3 > 0 then
-         o3 := input.d3 - 1;
+         input.d3 := input.d3 - 1;
       else
-         o3 := 9;
+         input.d3 := 9;
          if input.d2 > 0 then
-            o2 := input.d2 - 1;
+            input.d2 := input.d2 - 1;
          else
-            o2 := 9;
+            input.d2 := 9;
             if input.d1 > 0 then
-               o1 := input.d1 - 1;
+               input.d1 := input.d1 - 1;
             else
-               o1 := 9;
+               input.d1 := 9;
             end if;
          end if;
       end if;
-
-      input.d3 := o3;
-      input.d2 := o2;
-      input.d1 := o1;
    end decProc;
 
    procedure run is
@@ -80,7 +62,7 @@ package body Decrement is
 
    begin
 
-      valid := False;
+      --valid := False;
 
       -- First we initialise standard_input and standard output
       AS_Init_Standard_Output;
@@ -103,8 +85,6 @@ package body Decrement is
          exit when valid;
       end loop;
 
-      valid := False;
-
       loop
          AS_Put_Line ("Type in second digit");
          AS_Get (i2, "Please type in an integer; please try again");
@@ -116,8 +96,6 @@ package body Decrement is
 
          exit when valid;
       end loop;
-
-      valid := False;
 
       loop
          AS_Put_Line ("Type in third digit");
