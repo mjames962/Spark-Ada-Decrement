@@ -10,7 +10,9 @@ package Decrement is
       d3 : Digit;
    end record;
 
-   function dec (i1, i2, i3 : in Digit) return Integer;
+   function dec (input : Num) return Num;
+
+   procedure decProc (input : in out Num);
 
    procedure run;
 

@@ -3,43 +3,78 @@ pragma SPARK_Mode (On);
 with AS_Io_Wrapper; use AS_Io_Wrapper;
 
 package body Decrement is
-   o1 : Digit;
-   o2 : Digit;
-   o3 : Digit;
 
-   X : Num;
+   function dec (input : Num) return Num is
+      o1     : Digit;
+      o2     : Digit;
+      o3     : Digit;
+      output : Num;
 
-   function dec (i1, i2, i3 : in Digit) return Integer is
    begin
+      o1 := input.d1;
+      o2 := input.d2;
+      o3 := input.d3;
 
-      o1 := i1;
-      o2 := i2;
-      o3 := i3;
-
-      if i3 > 0 then
-         o3 := i3 - 1;
+      if input.d3 > 0 then
+         o3 := input.d3 - 1;
       else
          o3 := 9;
-         if i2 > 0 then
-            o2 := i2 - 1;
+         if input.d2 > 0 then
+            o2 := input.d2 - 1;
          else
             o2 := 9;
-            if i1 > 0 then
-               o1 := i1 - 1;
+            if input.d1 > 0 then
+               o1 := input.d1 - 1;
             else
                o1 := 9;
             end if;
          end if;
       end if;
 
-      return Integer ((o1 * 100) + (o2 * 10) + o3);
+      output.d3 := o3;
+      output.d2 := o2;
+      output.d1 := o1;
+
+      return output;
    end dec;
+
+   procedure decProc (input : in out Num) is
+      o1 : Digit;
+      o2 : Digit;
+      o3 : Digit;
+
+   begin
+      o1 := input.d1;
+      o2 := input.d2;
+      o3 := input.d3;
+
+      if input.d3 > 0 then
+         o3 := input.d3 - 1;
+      else
+         o3 := 9;
+         if input.d2 > 0 then
+            o2 := input.d2 - 1;
+         else
+            o2 := 9;
+            if input.d1 > 0 then
+               o1 := input.d1 - 1;
+            else
+               o1 := 9;
+            end if;
+         end if;
+      end if;
+
+      input.d3 := o3;
+      input.d2 := o2;
+      input.d1 := o1;
+   end decProc;
 
    procedure run is
       i1     : Integer;
       i2     : Integer;
       i3     : Integer;
-      output : Integer;
+      X      : Num;
+      output : Num;
 
       valid : Boolean;
 
@@ -101,9 +136,16 @@ package body Decrement is
       X.d2 := Digit (i2);
       X.d3 := Digit (i3);
 
-      output := Decrement.dec (i1 => X.d1, i2 => X.d2, i3 => X.d3);
+      output := Decrement.dec (X);
+      Decrement.decProc (X);
 
-      AS_Put_Line (output);
+      AS_Put_Line ("Function:");
+      AS_Put_Line
+        ((Integer (output.d1) * 100) + (Integer (output.d2) * 10) +
+         Integer (output.d3));
+      AS_Put_Line ("Procedure:");
+      AS_Put_Line
+        ((Integer (X.d1) * 100) + (Integer (X.d2) * 10) + Integer (X.d3));
 
       null;
    end run;
