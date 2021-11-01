@@ -10,7 +10,14 @@ package Decrement is
       d3 : Digit;
    end record;
 
-   function dec (input : Num) return Num;
+   function dec (input : Num) return Num with
+      Post =>
+      (input.d1 = 0 and input.d2 = 0 and input.d3 = 0 and dec'Result.d1 = 9 and
+       dec'Result.d2 = 9 and dec'Result.d3 = 9) or
+      (((Integer (input.d1) * 100) + (Integer (input.d2) * 10) +
+        Integer (input.d3)) =
+       ((Integer (dec'Result.d1) * 100) + (Integer (dec'Result.d2) * 10) +
+        Integer (dec'Result.d3) + 1));
 
    procedure decProc (input : in out Num) with
       Depends => (input => input),
